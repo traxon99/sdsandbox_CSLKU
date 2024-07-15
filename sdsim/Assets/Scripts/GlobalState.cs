@@ -11,6 +11,7 @@ public static class GlobalState
     public static int fps = 60;
     public static float timeScale = 1.0f;
     public static int maxSplitScreen = 4;
+    public static float telemetryFPS = 20.0f;
     public static bool bAutoHideSceneMenu = false;
 
     // should we create a car even though we don't have a network client?

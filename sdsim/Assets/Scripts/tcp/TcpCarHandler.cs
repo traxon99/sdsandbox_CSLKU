@@ -29,7 +29,7 @@ namespace tk
         private tk.JsonTcpClient client;
         public Text ai_text;
 
-        public float limitFPS = 20.0f;
+        public float limitFPS = GlobalState.telemetryFPS;
         float timeSinceLastCapture = 0.0f;
         public float timeSinceLastMoved = 0.0f;
         public Vector3 lastPos = Vector3.zero;

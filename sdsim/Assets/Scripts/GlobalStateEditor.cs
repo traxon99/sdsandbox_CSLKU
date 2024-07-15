@@ -26,6 +26,12 @@ public class GlobalStateEditor : MonoBehaviour
         get { return GlobalState.maxSplitScreen; }
         set { GlobalState.maxSplitScreen = value; }
     }
+    public float telemetryFPS
+    {
+        get { return GlobalState.telemetryFPS; }
+        set { GlobalState.telemetryFPS = value; }
+
+    }
     public bool generateTrees
     {
         get { return GlobalState.generateTrees; }
@@ -200,6 +206,13 @@ public class GlobalStateEditor : MonoBehaviour
             maxSplitScreen = tmp_maxsp;
         YOffset += Ysteps;
 
+        GUI.Label(new Rect(0, YOffset, LabelXOffset, 20), "Telemetry FPS");
+        string telemetryFPSString = GUI.TextField(new Rect(LabelXOffset, YOffset, width - LabelXOffset, 20), telemetryFPS.ToString());
+        float tmp_telemetryFPS = telemetryFPS;
+        float.TryParse(telemetryFPSString, out tmp_telemetryFPS);
+        if (tmp_telemetryFPS != telemetryFPS)
+            telemetryFPS = tmp_telemetryFPS;
+        YOffset += Ysteps;
         extendedTelemetry = GUI.Toggle(new Rect(0, YOffset, width, 20), extendedTelemetry, "extendedTelemetry");
         YOffset += Ysteps;
         generateTrees = GUI.Toggle(new Rect(0, YOffset, width, 20), generateTrees, "generateTrees");
