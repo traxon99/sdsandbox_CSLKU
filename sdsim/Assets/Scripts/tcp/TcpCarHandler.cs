@@ -94,6 +94,7 @@ namespace tk
             client.dispatcher.Register("lidar_config", new tk.Delegates.OnMsgRecv(OnLidarConfig));
             client.dispatcher.Register("set_position", new tk.Delegates.OnMsgRecv(OnSetPosition));
             client.dispatcher.Register("node_position", new tk.Delegates.OnMsgRecv(OnNodePositionRecv));
+            client.dispatcher.Register("telemetry_fps", new tk.Delegates.OnMsgRecv(OnTelemetryFPS));
         }
 
         public void Start()
@@ -592,6 +593,33 @@ namespace tk
                 {
                     Boot();
                 }
+            }
+        }
+
+        void OnTelemetryFPS(JSONObject json)
+        {
+            try
+            {
+                // Check if the field exists and is a string before attempting to parse
+                if (json.HasField("fps") && json.GetField("fps").IsString)
+                {
+                    float parsed_telemetry_fps = float.Parse(json.GetField("fps").str, CultureInfo.InvariantCulture.NumberFormat);
+                    if (parsed_telemetry_fps > 0.0f)
+                    {
+                        limitFPS = parsed_telemetry_fps;
+                        Console.WriteLine("telemetry_fps changed successfully:" + limitFPS);
+                    }
+                }
+                else
+                {
+                    // Handle the case where the field does not exist or is not a string
+                    Console.WriteLine("Field 'fps' does not exist or is not a string.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle parsing errors or any other exceptions
+                Console.WriteLine("Error parsing telemetry fps: " + ex.Message);
             }
         }
 
